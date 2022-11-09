@@ -2,7 +2,7 @@ export enum ModelEnum {
     Users = 'users',
     Roles = 'roles',
     Projects = 'projects',
-    ProjectsTypes = 'projectTypes',
+    Companies = 'companies',
     //
     Examples = 'examples',
     ForgotPassword = 'forgotPassword',

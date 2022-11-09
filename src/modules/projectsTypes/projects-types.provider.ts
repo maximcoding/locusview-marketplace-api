@@ -5,8 +5,8 @@ import {ProjectsTypesSchema} from './projects-types.schema';
 
 export const categoriesProviders = [
   {
-    provide: ModelEnum.ProjectsTypes,
-    useFactory: (connection: Connection) => connection.model(ModelEnum.ProjectsTypes, ProjectsTypesSchema),
+    provide: ModelEnum.Companies,
+    useFactory: (connection: Connection) => connection.model(ModelEnum.Companies, ProjectsTypesSchema),
     inject: [DATABASE_PROVIDER],
   },
 ];

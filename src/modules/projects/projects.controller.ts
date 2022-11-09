@@ -77,12 +77,6 @@ export class ProjectsController {
         return await this.service.findAll(query, filter);
     }
 
-    @Get('search/address')
-    async findByAddress(@Query() query: QueryProjectsByAddressPayload): Promise<IFindAllProjectsResponse> {
-        const regexStr = new RegExp(query.address?.toString()?.trim(), 'i');
-        return await this.service.findAll(query, {address: regexStr});
-    }
-
     @Patch(':id')
     async updateById(
         @Param('id', ObjectIdValidationPipe) id: string,
@@ -109,30 +103,8 @@ export class ProjectsController {
         return await this.service.create(user, data);
     }
 
-    @Put(':id/rate')
-    async rate(@Param('id', ObjectIdValidationPipe) id: string): Promise<IProject> {
-        return await this.service.rate(id);
-    }
-
     @Delete(':id')
     async remove(@Param('id', ObjectIdValidationPipe) id: string) {
         return await this.service.deleteById(id);
-    }
-
-    @Delete(':id/image')
-    async deleteImageFile(
-        @Param('id', ObjectIdValidationPipe) id: string,
-        @Query('fileId', ObjectIdValidationPipe) fileId: string,
-        @Query() query: DeleteImagePayload,
-    ): Promise<void> {
-        await this.service.deleteImageFile(id, fileId, query.type);
-    }
-
-    @Delete(':id/images')
-    async deleteProjectImages(
-        @Param('id', ObjectIdValidationPipe) id: string,
-        @Query() query: DeleteImagePayload,
-    ): Promise<void> {
-        await this.service.deleteProjectImages(id, query);
     }
 }

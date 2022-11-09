@@ -6,8 +6,8 @@ import {ProjectsTypesPayload} from './payload/projects-types.payload';
 import {ApiTags} from '@nestjs/swagger';
 import {ProjectTypeEnum} from "../../enums/projectTypeEnum";
 
-@ApiTags('House Categories')
-@Controller(ModelEnum.ProjectsTypes)
+@ApiTags('Companies ( Project Types)')
+@Controller(ModelEnum.Companies)
 export class ProjectsTypesController {
     constructor(private service: ProjectstypesService) {
     }

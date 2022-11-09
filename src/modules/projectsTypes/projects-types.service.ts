@@ -6,7 +6,7 @@ import {ProjectTypeEnum} from "../../enums/projectTypeEnum";
 
 @Injectable()
 export class ProjectstypesService {
-  constructor(@Inject(ModelEnum.ProjectsTypes) private dataModel: Model<ProjectsTypesDocument>) {}
+  constructor(@Inject(ModelEnum.Companies) private dataModel: Model<ProjectsTypesDocument>) {}
 
   async findAll(): Promise<IProjectsTypes[]> {
     return this.dataModel.find().exec();
