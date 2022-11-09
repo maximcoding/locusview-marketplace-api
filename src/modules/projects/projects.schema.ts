@@ -71,15 +71,6 @@ export class Project implements IProject {
     @Prop({type: [String]})
     contractor: string[];
 
-    @Prop({type: [{type: mongoose.Schema.Types.ObjectId, ref: ModelEnum.Files}]})
-    images: AwsFile[];
-
-    // @Factory((faker) => faker.random.arrayElement(Object.values(FacilitiesEnum)))
-    // @Prop({
-    //     type: [String],
-    //     enum: Object.values(FacilitiesEnum),
-    // })
-    // facilities: FacilitiesEnum[];
 }
 
 export const ProjectsSchema = SchemaFactory.createForClass(Project);

@@ -44,6 +44,7 @@ export class CreateProjectPayload implements IProject {
     projectType: CompanyEnum;
 
     @ApiProperty({description: faker.lorem.words(), default: faker.lorem.words(), required: false, type: String})
+    @IsString()
     location: string;
 
     @ApiProperty({type: [String]})
@@ -58,7 +59,7 @@ export class CreateProjectPayload implements IProject {
     @IsDateString()
     startDate: Date;
 
-    @ApiProperty({description: 'end date'})
+    @ApiProperty({description: 'due date'})
     @IsDateString()
     dueDate: Date;
 

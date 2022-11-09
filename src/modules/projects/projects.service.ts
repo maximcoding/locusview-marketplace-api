@@ -10,7 +10,7 @@ import {
 } from './payload/query-projects.payload';
 import {CompaniesService} from '../companies/companies.service';
 import {FilesService} from '../files/files.service';
-import {AppFileEnum, IAppDocumentFile, IAppFile, IAwsFile} from '../files/aws-file.schema';
+import {AppFileEnum, IAwsFile} from '../files/aws-file.schema';
 import {CreateProjectPayload} from './payload/create-project.payload';
 import {stringToBoolean} from '../../helpers/string-boolean.parser';
 import {limitMax4Files} from '../../helpers/check-limit.files';
