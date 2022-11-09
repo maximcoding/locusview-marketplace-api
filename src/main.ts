@@ -25,8 +25,8 @@ import * as helmet from 'helmet';
 import * as passport from 'passport';
 
 const httpsOptions = {
-  key: fs.readFileSync(__dirname + '/../ssl/keys/localhost.pem', 'utf8'),
-  cert: fs.readFileSync(__dirname + '/../ssl/keys/localhost.cert', 'utf8'),
+  // key: fs.readFileSync(__dirname + '/../ssl/keys/localhost.pem', 'utf8'),
+  // cert: fs.readFileSync(__dirname + '/../ssl/keys/localhost.cert', 'utf8'),
 };
 
 async function bootstrap() {
