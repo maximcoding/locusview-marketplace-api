@@ -20,9 +20,7 @@ import {PatchProjectPayload} from './payload/patch-project.payload';
 import {ApiBearerAuth, ApiConsumes, ApiCreatedResponse, ApiTags} from '@nestjs/swagger';
 import {ObjectIdValidationPipe} from '../../helpers/object-id.validation.pipe';
 import {
-    DeleteImagePayload,
     IFindAllProjectsResponse,
-    QueryProjectsByAddressPayload,
     QueryProjectsByTextPayload,
     QueryProjectsPayload,
 } from './payload/query-projects.payload';
@@ -47,13 +45,13 @@ export class ProjectsController {
         return await this.service.findAll(payload);
     }
 
-    @Get('me')
-    async findMine(
-        @AuthUser() user: IUser,
-        @Query() payload: QueryProjectsPayload,
-    ): Promise<IFindAllProjectsResponse> {
-        return await this.service.findAll(payload, {user: user._id});
-    }
+    // @Get('me')
+    // async findMine(
+    //     @AuthUser() user: IUser,
+    //     @Query() payload: QueryProjectsPayload,
+    // ): Promise<IFindAllProjectsResponse> {
+    //     return await this.service.findAll(payload, {user: user._id});
+    // }
 
     @Post('all/filter')
     async filterProjects(@Body() payload: FilterProjectsPayload): Promise<IFindAllProjectsResponse> {

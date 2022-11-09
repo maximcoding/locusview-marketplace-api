@@ -47,17 +47,14 @@ export class ProjectsService {
             const projection = {
                 title: 1,
                 description: 1,
-                coordinate: 1,
-                contractor: 1,
                 projectType: 1,
                 createdAt: 1,
                 updatedAt: 1,
             };
-            query.populate(AppFileEnum.images, {mimetype: 1, url: 1, _id: 1, key: 1}).select(projection);
+            // query.populate(AppFileEnum.images, {mimetype: 1, url: 1, _id: 1, key: 1}).select(projection);
         } else {
-            query
-                .populate('owner', {firstName: 1, lastName: 1, _id: 1})
-                .populate(AppFileEnum.images, {mimetype: 1, url: 1, _id: 1, key: 1})
+            // query.populate('owner', {firstName: 1, lastName: 1, _id: 1})
+            //     .populate(AppFileEnum.images, {mimetype: 1, url: 1, _id: 1, key: 1})
         }
         if (params.sort) {
             query.sort(this.sortBy(params.sort));
@@ -90,7 +87,7 @@ export class ProjectsService {
             filter['startDate'] = {$gte: new Date(payload.startDate).toISOString()};
         }
         if (payload?.dueDate) {
-            filter['startDate'] = {$gte: new Date(payload.dueDate).toISOString()};
+            filter['dueDate'] = {$gte: new Date(payload.dueDate).toISOString()};
         }
         return await this.findAll(payload, filter);
     }
