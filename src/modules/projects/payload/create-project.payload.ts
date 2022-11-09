@@ -10,6 +10,8 @@ import {
 } from 'class-validator';
 import {ApiProperty} from '@nestjs/swagger';
 import * as faker from 'faker';
+import {IProject} from "../projects.schema";
+import {IAwsFile} from 'src/modules/files/aws-file.schema';
 
 export const currencyOptions = {
     require_symbol: false,
@@ -28,11 +30,11 @@ export const currencyOptions = {
     allow_space_after_digits: false,
 };
 
-export class CreateProjectPayload {
+export class CreateProjectPayload implements IProject {
     @ApiProperty({
-        description: 'project type mandatory',
+        description: 'company name ( project type ) mandatory',
         enum: CompanyEnum,
-        enumName: 'ProjectTypeEnum',
+        enumName: 'CompanyEnum',
         default: CompanyEnum.OneGas,
         required: true,
     })
@@ -41,9 +43,16 @@ export class CreateProjectPayload {
     @IsNotEmpty()
     projectType: CompanyEnum;
 
-    @ApiProperty({type: [Number]})
+    @ApiProperty({description: faker.lorem.words(), default: faker.lorem.words(), required: false, type: String})
+    location: string;
+
+    @ApiProperty({type: [String]})
     @IsArray()
-    location: number[];
+    contractor: string[];
+
+    @ApiProperty({type: [String]})
+    @IsArray()
+    requiredQualifications: string[];
 
     @ApiProperty({description: 'start date'})
     @IsDateString()
@@ -51,7 +60,7 @@ export class CreateProjectPayload {
 
     @ApiProperty({description: 'end date'})
     @IsDateString()
-    endDate: Date;
+    dueDate: Date;
 
     @ApiProperty({description: faker.lorem.words(), default: faker.lorem.words(), required: false, type: String})
     title: string;
@@ -61,12 +70,6 @@ export class CreateProjectPayload {
     @IsOptional()
     @IsString()
     description: string;
-
-    @ApiProperty({description: faker.name.firstName(), default: faker.name.firstName(), required: false, type: String})
-    @MinLength(2)
-    @IsOptional()
-    @IsString()
-    contractor: string;
 
     @ApiProperty({description: faker.lorem.words(), default: faker.lorem.words(), required: false, type: String})
     @MinLength(2)

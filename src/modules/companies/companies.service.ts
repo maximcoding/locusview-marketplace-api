@@ -3,11 +3,11 @@ import {Injectable, Inject, Param, BadRequestException} from '@nestjs/common';
 import {ModelEnum} from '../../enums/model.enum';
 import {CompanyEnum} from "../../enums/companyEnum";
 import {ICompany} from "./companies.schema";
-import {CompanyDocument} from "../projects/projects.schema";
+import {ProjectDocument} from "../projects/projects.schema";
 
 @Injectable()
 export class CompaniesService {
-    constructor(@Inject(ModelEnum.Companies) private dataModel: Model<CompanyDocument>) {
+    constructor(@Inject(ModelEnum.Companies) private dataModel: Model<ProjectDocument>) {
     }
 
     async findAll(): Promise<any[]> {

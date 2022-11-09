@@ -1,6 +1,5 @@
 import {Model} from 'mongoose';
 import {BadRequestException, Inject, Injectable, NotFoundException} from '@nestjs/common';
-import {ICompany, CompanyDocument} from './projects.schema';
 import {PatchProjectPayload} from './payload/patch-project.payload';
 import {ModelEnum} from '../../enums/model.enum';
 import {
@@ -16,6 +15,8 @@ import {CreateProjectPayload} from './payload/create-project.payload';
 import {stringToBoolean} from '../../helpers/string-boolean.parser';
 import {limitMax4Files} from '../../helpers/check-limit.files';
 import {FilterProjectsPayload} from './payload/filter-projects.payload';
+import {IProject, ProjectDocument} from "./projects.schema";
+import {ICompany} from "../companies/companies.schema";
 
 export enum SortBy {
     new = 'new',
@@ -27,14 +28,14 @@ export class ProjectsService {
     private companiesMap: { [key: string]: ICompany } = {};
 
     constructor(
-        @Inject(ModelEnum.Projects) private dataModel: Model<CompanyDocument>,
-        private projectsTypesSe: CompaniesService,
+        @Inject(ModelEnum.Projects) private dataModel: Model<ProjectDocument>,
+        private companiesService: CompaniesService,
         private readonly filesService: FilesService,
     ) {
         (async () => {
-            const projectsTypes = await this.projectsTypesSe.findAll();
+            const companies = await this.companiesService.findAll();
             this.companiesMap = {};
-            projectsTypes.forEach((cat: ICompany) => {
+            companies.forEach((cat: ICompany) => {
                 this.companiesMap[cat.projectType] = cat;
             });
         })();
@@ -94,7 +95,7 @@ export class ProjectsService {
         return await this.findAll(payload, filter);
     }
 
-    async findWithFilesById(id: string, attr: AppFileEnum): Promise<CompanyDocument> {
+    async findWithFilesById(id: string, attr: AppFileEnum): Promise<ProjectDocument> {
         const found = await this.dataModel.findById(id).populate(attr).exec();
         if (!found) {
             throw new NotFoundException('no data found');
@@ -126,13 +127,13 @@ export class ProjectsService {
     }
 
     // PROPERTY_MOCK
-    async create(user, data: CreateProjectPayload): Promise<ICompany> {
+    async create(user, data: CreateProjectPayload): Promise<IProject> {
         this.checkProjectTypeExist(data.projectType);
         const property = new this.dataModel({...data});
         return property.save();
     }
 
-    async updateById(id: string, data: PatchProjectPayload): Promise<CompanyDocument> {
+    async updateById(id: string, data: PatchProjectPayload): Promise<ProjectDocument> {
         this.checkProjectTypeExist(data.projectType);
         try {
             return await this.dataModel.findByIdAndUpdate(id, {...data}).exec();
@@ -141,7 +142,7 @@ export class ProjectsService {
         }
     }
 
-    public async uploadImages(id: string, data: Express.Multer.File[]): Promise<ICompany> {
+    public async uploadImages(id: string, data: Express.Multer.File[]): Promise<IProject> {
         const project = await this.findWithFilesById(id, AppFileEnum.images);
         await this.cleanPreviousFiles(project.images);
         limitMax4Files(data['files']);
@@ -201,7 +202,7 @@ export class ProjectsService {
         }
     }
 
-    async rate(projectId: string): Promise<CompanyDocument> {
+    async rate(projectId: string): Promise<ProjectDocument> {
         return this.dataModel.findOneAndUpdate({_id: projectId}, {$inc: {rating: 1}}).exec();
     }
 

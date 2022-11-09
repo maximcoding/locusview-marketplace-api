@@ -1,4 +1,3 @@
-import {ICompany} from '../projects.schema';
 import {
     ArrayUnique,
     IsArray,
@@ -16,19 +15,13 @@ import {
 } from 'class-validator';
 import {ApiProperty} from '@nestjs/swagger';
 import {CompanyEnum} from "../../../enums/companyEnum";
+import {IProject} from "../projects.schema";
 
-export class PatchProjectPayload implements ICompany {
+export class PatchProjectPayload implements IProject {
 
     @ApiProperty({type: String})
     @IsOptional()
     title: string;
-
-    @ApiProperty({description: 'free text', type: String})
-    @MinLength(2)
-    @IsOptional()
-    @IsString()
-    contractor: string;
-
 
     @ApiProperty({
         description: 'some address',
@@ -38,9 +31,9 @@ export class PatchProjectPayload implements ICompany {
     @IsString()
     address: string;
 
-    @ApiProperty({type: [Number]})
+    @ApiProperty({type: String})
     @IsArray()
-    location: number[];
+    location: string;
 
     @ApiProperty({type: Number})
     deposit: number;

@@ -11,12 +11,13 @@ const date = new Date();
 const thisYear = date.getFullYear();
 
 
-export interface ICompany {
+export interface IProject {
     _id?: string;
     title: string;
     description: string;
-    contractor?: string;
-    location: number[];
+    location: string;
+    contractor?: string[];
+    requiredQualifications?: string[];
     companyName?: string;
     projectName?: string;
     projectType?: CompanyEnum;
@@ -25,12 +26,18 @@ export interface ICompany {
     images?: IAwsFile[];
 }
 
-export type CompanyDocument = ICompany & Document;
+export type ProjectDocument = IProject & Document;
 
 @Schema(CommonSchemaOptions)
-export class Project implements ICompany {
+export class Project implements IProject {
 
     _id?: string;
+
+    @Prop({type: String})
+    location: string;
+
+    @Prop({type: [String]})
+    requiredQualifications?: string[];
 
     @Prop({type: String})
     title: string;
@@ -45,15 +52,9 @@ export class Project implements ICompany {
     companyName: string;
 
 
-    @Prop({type: String})
-    contractor: string;
+    @Prop({type: [String]})
+    contractor: string[];
 
-    @Prop({
-        type: [Number],
-        default: [0, 0],
-        required: true,
-    })
-    location: number[];
 
     @Prop({
         type: String,
@@ -87,9 +88,9 @@ export const ProjectsSchema = SchemaFactory.createForClass(Project);
 
 ProjectsSchema.index({'$**': 'text'});
 
-export type IProjectModel = Model<CompanyDocument>;
+export type IProjectModel = Model<ProjectDocument>;
 
-export const ProjectModel: IProjectModel = model<CompanyDocument, IProjectModel>(
+export const ProjectModel: IProjectModel = model<ProjectDocument, IProjectModel>(
     ModelEnum.Projects,
     ProjectsSchema,
 );
@@ -99,6 +100,6 @@ ProjectsSchema.post('save', function (doc, next) {
     // throw new Error('something went wrong');
 });
 
-ProjectsSchema.post('remove', async function (doc: CompanyDocument) {
+ProjectsSchema.post('remove', async function (doc: ProjectDocument) {
     // await RoomModel.remove({property: doc._id}).exec();
 });
