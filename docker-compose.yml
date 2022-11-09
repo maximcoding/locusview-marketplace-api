@@ -1,0 +1,58 @@
+version: "3.7"
+
+# usage:
+# sudo docker-compose build -d
+# sudo docker-compose up -d
+
+services:
+  mongo_service:
+    container_name: mongo_container
+    image: mongo:4.2
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${DOCKER_MONGO_DB_ROOT_NAME}
+      - MONGO_INITDB_DATABASE=${DOCKER_MONGO_DB_NAME}
+      - MONGO_INITDB_ROOT_PASSWORD=${DOCKER_MONGO_DB_ROOT_PASS}
+    networks:
+      - hackathon-network
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./data:/data/db
+
+  mongo_express_service:
+    container_name: mongo_express_container
+    image: mongo-express
+    depends_on:
+      - mongo_service
+    networks:
+      - hackathon-network
+    restart: unless-stopped
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongo-dev
+
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=${DOCKER_MONGO_EXPRESS_ADMIN_USER}
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=${DOCKER_MONGO_EXPRESS_ADMIN_PASS}
+
+      - ME_CONFIG_BASICAUTH_USERNAME=${DOCKER_MONGO_EXPRESS_AUTH_USER}
+      - ME_CONFIG_BASICAUTH_PASSWORD=${DOCKER_MONGO_EXPRESS_AUTH_PASS}
+    ports:
+      - '8081:8081'
+    volumes:
+      - ./data:/data/db
+
+  redis-service:
+    container_name: redis_container
+    image: "redis:alpine"
+    command: redis-server --requirepass ${REDIS_PASS}
+    restart: always
+    ports:
+      - ${REDIS_PORT_OUT}:${REDIS_PORT_IN}
+    networks:
+      - hackathon-network
+    volumes:
+      - ./redis-data:/data
+
+networks:
+  hackathon-network:
+    driver: bridge
+
