@@ -48,7 +48,7 @@
     "aws-sdk": "^2.938.0",
     "bcrypt": "^5.0.1",
     "body-parser": "^1.19.0",
-    "cache-manager": "^3.4.4",
+    "cache-manager": "^3.6.3",
     "cache-manager-redis-store": "^2.0.0",
     "class-transformer": "^0.4.0",
     "class-validator": "^0.13.1",
