@@ -42,6 +42,7 @@ export class ProjectsService {
     }
 
     async findAll(params: QueryProjectsPayload, filter?: any): Promise<IFindAllProjectsResponse> {
+        console.log('findAll');
         const query = this.dataModel.find(filter ? filter : {});
         if (stringToBoolean(params.preview)) {
             const projection = {
