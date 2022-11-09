@@ -33,6 +33,19 @@ export class Project implements IProject {
 
     _id?: string;
 
+    @Prop({type: String})
+    location: string;
+    @Prop({type: String})
+    title: string;
+    @Prop({type: String})
+    description: string;
+
+    @Prop({type: String})
+    projectName: string;
+
+    @Prop({type: String})
+    companyName: string;
+
     @Prop({
         type: String,
         required: true,
@@ -50,23 +63,8 @@ export class Project implements IProject {
     })
     dueDate: Date;
 
-    @Prop({type: String})
-    location: string;
-
-    @Prop({type: String})
-    title: string;
-
-    @Prop({type: String})
-    description: string;
-
     @Prop({type: [String]})
     requiredQualifications?: string[];
-
-    @Prop({type: String})
-    projectName: string;
-
-    @Prop({type: String})
-    companyName: string;
 
     @Prop({type: [String]})
     contractor: string[];

@@ -50,14 +50,6 @@ export class QueryProjectsPayload {
     @IsOptional()
     sort: SortBy;
 
-    @ApiProperty({
-        description: 'partial data',
-        default: PropertyPreview.true,
-        enumName: 'PropertyPreview',
-        enum: PropertyPreview,
-    })
-    @IsOptional()
-    preview: boolean;
 }
 
 export class QueryProjectsByTypePayload extends QueryProjectsPayload {

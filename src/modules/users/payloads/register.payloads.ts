@@ -93,11 +93,11 @@ export class RegisterPayload {
 
   // Email
   @ApiProperty({required: false})
-  @ApiModelProperty({
-    example: 'test1@gmail.com',
-    description: 'The email of the User',
-    format: 'email',
-  })
+  // @ApiModelProperty({
+  //   example: 'test1@gmail.com',
+  //   description: 'The email of the User',
+  //   format: 'email',
+  // })
   @IsEmail()
   @IsOptional()
   readonly email: string;

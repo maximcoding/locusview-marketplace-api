@@ -42,20 +42,8 @@ export class ProjectsService {
     }
 
     async findAll(params: QueryProjectsPayload, filter?: any): Promise<IFindAllProjectsResponse> {
+        console.log('filter', filter);
         const query = this.dataModel.find(filter ? filter : {});
-        if (stringToBoolean(params.preview)) {
-            const projection = {
-                title: 1,
-                description: 1,
-                projectType: 1,
-                createdAt: 1,
-                updatedAt: 1,
-            };
-            // query.populate(AppFileEnum.images, {mimetype: 1, url: 1, _id: 1, key: 1}).select(projection);
-        } else {
-            // query.populate('owner', {firstName: 1, lastName: 1, _id: 1})
-            //     .populate(AppFileEnum.images, {mimetype: 1, url: 1, _id: 1, key: 1})
-        }
         if (params.sort) {
             query.sort(this.sortBy(params.sort));
         }

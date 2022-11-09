@@ -6,30 +6,26 @@ import {
     Param,
     Patch,
     Post,
-    Put,
     Query,
-    UploadedFile,
     UploadedFiles,
-    UseGuards,
     UseInterceptors,
 } from '@nestjs/common';
 import {ModelEnum} from '../../enums/model.enum';
 import {ProjectsService} from './projects.service';
 import {CreateProjectPayload} from './payload/create-project.payload';
 import {PatchProjectPayload} from './payload/patch-project.payload';
-import {ApiBearerAuth, ApiConsumes, ApiCreatedResponse, ApiTags} from '@nestjs/swagger';
+import {ApiConsumes, ApiCreatedResponse, ApiTags} from '@nestjs/swagger';
 import {ObjectIdValidationPipe} from '../../helpers/object-id.validation.pipe';
 import {
     IFindAllProjectsResponse,
     QueryProjectsByTextPayload,
     QueryProjectsPayload,
 } from './payload/query-projects.payload';
-import {FileFieldsInterceptor, FileInterceptor} from '@nestjs/platform-express';
+import {FileFieldsInterceptor} from '@nestjs/platform-express';
 import {ApiMultiFile} from '../files/api-multiple-files.decorator';
 import {AuthUser} from '../users/user.decorator';
 import {UserDocument} from '../users/schemas/user.schema';
 import {FilterProjectsPayload} from './payload/filter-projects.payload';
-import {IUser} from '../users/interfaces/user.interface';
 import {IProject} from "./projects.schema";
 
 const multerOptions = {limits: {fileSize: +process.env.APP_MAX_FILE_SIZE}};
@@ -98,6 +94,7 @@ export class ProjectsController {
     @Post('create')
     @ApiCreatedResponse({description: 'The project has been successfully created.'})
     async create(@AuthUser() user: UserDocument, @Body() data: CreateProjectPayload): Promise<IProject> {
+        console.log(data);
         return await this.service.create(user, data);
     }
 
