@@ -1,4 +1,4 @@
-import {IProject} from '../projects.schema';
+import {ICompany} from '../projects.schema';
 import {
     ArrayUnique,
     IsArray,
@@ -15,9 +15,9 @@ import {
     MinLength,
 } from 'class-validator';
 import {ApiProperty} from '@nestjs/swagger';
-import {ProjectTypeEnum} from "../../../enums/projectTypeEnum";
+import {CompanyEnum} from "../../../enums/companyEnum";
 
-export class PatchProjectPayload implements IProject {
+export class PatchProjectPayload implements ICompany {
 
     @ApiProperty({type: String})
     @IsOptional()
@@ -66,14 +66,14 @@ export class PatchProjectPayload implements IProject {
 
     @ApiProperty({
         description: 'project type mandatory',
-        enum: ProjectTypeEnum,
+        enum: CompanyEnum,
         enumName: 'ProjectTypeEnum',
-        default: ProjectTypeEnum.OneGas,
+        default: CompanyEnum.OneGas,
     })
     @IsOptional()
-    @IsEnum(ProjectTypeEnum)
+    @IsEnum(CompanyEnum)
     @IsString()
     @IsNotEmpty()
-    projectType: ProjectTypeEnum;
+    projectType: CompanyEnum;
 
 }

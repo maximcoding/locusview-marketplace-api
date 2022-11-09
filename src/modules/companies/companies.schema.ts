@@ -2,30 +2,30 @@ import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {Document} from 'mongoose';
 import {CommonSchemaOptions} from '../../helpers/common-schema.options';
 import {Factory} from 'nestjs-seeder';
-import {ProjectTypeEnum} from "../../enums/projectTypeEnum";
+import {CompanyEnum} from "../../enums/companyEnum";
 
-export interface IProjectsTypes {
+export interface ICompany {
   _id?: string;
-  projectType: ProjectTypeEnum;
+  projectType: CompanyEnum;
   photoUrl: string;
 }
 
 @Schema(CommonSchemaOptions)
-export class ProjectsTypes implements IProjectsTypes {
+export class Companies implements ICompany {
   @Factory((faker, ctx) => `${ctx.name}`)
   @Prop({
     type: String,
     required: true,
-    enum: Object.values(ProjectTypeEnum),
+    enum: Object.values(CompanyEnum),
     unique: true,
   })
-  projectType: ProjectTypeEnum;
+  projectType: CompanyEnum;
 
   @Factory((faker, ctx) => `${ctx.photoUrl}`)
   @Prop({type: String, required: true})
   photoUrl: string;
 }
 
-export type ProjectsTypesDocument = ProjectsTypes & Document;
+export type ProjectsTypesDocument = Companies & Document;
 
-export const ProjectsTypesSchema = SchemaFactory.createForClass(ProjectsTypes);
+export const CompaniesSchema = SchemaFactory.createForClass(Companies);

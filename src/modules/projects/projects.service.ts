@@ -1,6 +1,6 @@
 import {Model} from 'mongoose';
 import {BadRequestException, Inject, Injectable, NotFoundException} from '@nestjs/common';
-import {IProject, ProjectDocument} from './projects.schema';
+import {ICompany, CompanyDocument} from './projects.schema';
 import {PatchProjectPayload} from './payload/patch-project.payload';
 import {ModelEnum} from '../../enums/model.enum';
 import {
@@ -9,8 +9,7 @@ import {
     QueryProjectsByProjectTypePayload,
     QueryProjectsPayload,
 } from './payload/query-projects.payload';
-import {IProjectsTypes} from '../projectsTypes/projects-types.schema';
-import {ProjectstypesService} from '../projectsTypes/projects-types.service';
+import {CompaniesService} from '../companies/companies.service';
 import {FilesService} from '../files/files.service';
 import {AppFileEnum, IAppDocumentFile, IAppFile, IAwsFile} from '../files/aws-file.schema';
 import {CreateProjectPayload} from './payload/create-project.payload';
@@ -25,18 +24,18 @@ export enum SortBy {
 
 @Injectable()
 export class ProjectsService {
-    private projectTypesMap: { [key: string]: IProjectsTypes } = {};
+    private companiesMap: { [key: string]: ICompany } = {};
 
     constructor(
-        @Inject(ModelEnum.Projects) private dataModel: Model<ProjectDocument>,
-        private projectsTypesSe: ProjectstypesService,
+        @Inject(ModelEnum.Projects) private dataModel: Model<CompanyDocument>,
+        private projectsTypesSe: CompaniesService,
         private readonly filesService: FilesService,
     ) {
         (async () => {
             const projectsTypes = await this.projectsTypesSe.findAll();
-            this.projectTypesMap = {};
-            projectsTypes.forEach((cat: IProjectsTypes) => {
-                this.projectTypesMap[cat.projectType] = cat;
+            this.companiesMap = {};
+            projectsTypes.forEach((cat: ICompany) => {
+                this.companiesMap[cat.projectType] = cat;
             });
         })();
     }
@@ -95,7 +94,7 @@ export class ProjectsService {
         return await this.findAll(payload, filter);
     }
 
-    async findWithFilesById(id: string, attr: AppFileEnum): Promise<ProjectDocument> {
+    async findWithFilesById(id: string, attr: AppFileEnum): Promise<CompanyDocument> {
         const found = await this.dataModel.findById(id).populate(attr).exec();
         if (!found) {
             throw new NotFoundException('no data found');
@@ -127,13 +126,13 @@ export class ProjectsService {
     }
 
     // PROPERTY_MOCK
-    async create(user, data: CreateProjectPayload): Promise<IProject> {
+    async create(user, data: CreateProjectPayload): Promise<ICompany> {
         this.checkProjectTypeExist(data.projectType);
         const property = new this.dataModel({...data});
         return property.save();
     }
 
-    async updateById(id: string, data: PatchProjectPayload): Promise<ProjectDocument> {
+    async updateById(id: string, data: PatchProjectPayload): Promise<CompanyDocument> {
         this.checkProjectTypeExist(data.projectType);
         try {
             return await this.dataModel.findByIdAndUpdate(id, {...data}).exec();
@@ -142,7 +141,7 @@ export class ProjectsService {
         }
     }
 
-    public async uploadImages(id: string, data: Express.Multer.File[]): Promise<IProject> {
+    public async uploadImages(id: string, data: Express.Multer.File[]): Promise<ICompany> {
         const project = await this.findWithFilesById(id, AppFileEnum.images);
         await this.cleanPreviousFiles(project.images);
         limitMax4Files(data['files']);
@@ -202,7 +201,7 @@ export class ProjectsService {
         }
     }
 
-    async rate(projectId: string): Promise<ProjectDocument> {
+    async rate(projectId: string): Promise<CompanyDocument> {
         return this.dataModel.findOneAndUpdate({_id: projectId}, {$inc: {rating: 1}}).exec();
     }
 
@@ -215,7 +214,7 @@ export class ProjectsService {
     }
 
     private checkProjectTypeExist(projectType: string) {
-        const obj = this.projectTypesMap[projectType];
+        const obj = this.companiesMap[projectType];
         if (!obj) {
             throw new NotFoundException('project type does not exist');
         }

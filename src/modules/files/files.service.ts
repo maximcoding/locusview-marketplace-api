@@ -22,7 +22,7 @@ import {
   VideoFormat,
 } from './aws-file.schema';
 import {FILE_MODEL} from './files.providers';
-import {IProject} from '../projects/projects.schema';
+import {ICompany} from '../projects/projects.schema';
 
 const path = require('path');
 

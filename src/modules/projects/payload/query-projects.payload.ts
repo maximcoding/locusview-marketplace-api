@@ -16,7 +16,7 @@ import {ApiProperty} from '@nestjs/swagger';
 import {AppFileEnum} from '../../files/aws-file.schema';
 import faker from 'faker';
 import {currencyOptions} from './create-project.payload';
-import {ProjectTypeEnum} from "../../../enums/projectTypeEnum";
+import {CompanyEnum} from "../../../enums/companyEnum";
 
 export enum PropertyPreview {
     false,
@@ -66,15 +66,15 @@ export class QueryProjectsByTypePayload extends QueryProjectsPayload {
 export class QueryProjectsByProjectTypePayload extends QueryProjectsPayload {
     @ApiProperty({
         description: 'project type mandatory',
-        enum: ProjectTypeEnum,
+        enum: CompanyEnum,
         enumName: 'ProjectTypeEnum',
-        default: ProjectTypeEnum.OneGas,
+        default: CompanyEnum.OneGas,
         required: true,
     })
-    @IsEnum(ProjectTypeEnum)
+    @IsEnum(CompanyEnum)
     @IsString()
     @IsNotEmpty()
-    projectType: ProjectTypeEnum;
+    projectType: CompanyEnum;
 }
 
 export class QueryProjectsByAddressPayload extends QueryProjectsPayload {

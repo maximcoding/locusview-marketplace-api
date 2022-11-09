@@ -1,17 +1,17 @@
-import {IProjectsTypes} from '../projects-types.schema';
 import {ApiProperty} from '@nestjs/swagger';
 import {IsArray, IsNotEmpty, IsString} from 'class-validator';
-import {ProjectTypeEnum} from "../../../enums/projectTypeEnum";
+import {CompanyEnum} from "../../../enums/companyEnum";
+import {ICompany} from "../companies.schema";
 
-export class ProjectsTypesPayload implements IProjectsTypes {
+export class CompaniesPayload implements ICompany {
     @ApiProperty({
         description: 'project type',
         required: true,
-        enum: ProjectTypeEnum,
+        enum: CompanyEnum,
         enumName: 'ProjectTypeEnum',
     })
     @IsNotEmpty()
-    projectType: ProjectTypeEnum;
+    projectType: CompanyEnum;
 
     @IsString()
     @ApiProperty({
@@ -24,9 +24,9 @@ export class ProjectsTypesPayload implements IProjectsTypes {
 
 export class ProjectsTypesBulkPayload {
     @ApiProperty({
-        description: 'array of projectsTypes',
+        description: 'array of companies',
     })
     @IsNotEmpty()
     @IsArray()
-    projectsTypes: IProjectsTypes[];
+    companies: ICompany[];
 }

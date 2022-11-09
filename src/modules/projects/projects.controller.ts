@@ -17,7 +17,7 @@ import {ModelEnum} from '../../enums/model.enum';
 import {ProjectsService} from './projects.service';
 import {CreateProjectPayload} from './payload/create-project.payload';
 import {PatchProjectPayload} from './payload/patch-project.payload';
-import {IProject} from './projects.schema';
+import {ICompany} from './projects.schema';
 import {ApiBearerAuth, ApiConsumes, ApiCreatedResponse, ApiTags} from '@nestjs/swagger';
 import {ObjectIdValidationPipe} from '../../helpers/object-id.validation.pipe';
 import {
@@ -61,7 +61,7 @@ export class ProjectsController {
     }
 
     @Get(':id')
-    async findById(@Param('id', ObjectIdValidationPipe) id: string): Promise<IProject> {
+    async findById(@Param('id', ObjectIdValidationPipe) id: string): Promise<ICompany> {
         return await this.service.findByIdPopulate(id);
     }
 
@@ -81,7 +81,7 @@ export class ProjectsController {
     async updateById(
         @Param('id', ObjectIdValidationPipe) id: string,
         @Body() data: PatchProjectPayload,
-    ): Promise<IProject> {
+    ): Promise<ICompany> {
         return await this.service.updateById(id, data);
     }
 
@@ -93,13 +93,13 @@ export class ProjectsController {
     async uploadImages(
         @Param('id', ObjectIdValidationPipe) id: string,
         @UploadedFiles() data: Express.Multer.File[],
-    ): Promise<IProject> {
+    ): Promise<ICompany> {
         return await this.service.uploadImages(id, data);
     }
 
     @Post('create')
     @ApiCreatedResponse({description: 'The project has been successfully created.'})
-    async create(@AuthUser() user: UserDocument, @Body() data: CreateProjectPayload): Promise<IProject> {
+    async create(@AuthUser() user: UserDocument, @Body() data: CreateProjectPayload): Promise<ICompany> {
         return await this.service.create(user, data);
     }
 

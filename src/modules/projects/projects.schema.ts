@@ -5,13 +5,13 @@ import {Document, Model, model, ObjectId} from 'mongoose';
 import {Prop, Schema, SchemaFactory} from '@nestjs/mongoose';
 import {CommonSchemaOptions} from '../../helpers/common-schema.options';
 import {AwsFile, IAwsFile} from '../files/aws-file.schema';
-import {ProjectTypeEnum} from "../../enums/projectTypeEnum";
+import {CompanyEnum} from "../../enums/companyEnum";
 
 const date = new Date();
 const thisYear = date.getFullYear();
 
 
-export interface IProject {
+export interface ICompany {
     _id?: string;
     title: string;
     description: string;
@@ -19,16 +19,16 @@ export interface IProject {
     location: number[];
     companyName?: string;
     projectName?: string;
-    projectType?: ProjectTypeEnum;
+    projectType?: CompanyEnum;
     startDate: Date;
     dueDate: Date;
     images?: IAwsFile[];
 }
 
-export type ProjectDocument = IProject & Document;
+export type CompanyDocument = ICompany & Document;
 
 @Schema(CommonSchemaOptions)
-export class Project implements IProject {
+export class Project implements ICompany {
 
     _id?: string;
 
@@ -58,9 +58,9 @@ export class Project implements IProject {
     @Prop({
         type: String,
         required: true,
-        enum: Object.values(ProjectTypeEnum),
+        enum: Object.values(CompanyEnum),
     })
-    projectType: ProjectTypeEnum;
+    projectType: CompanyEnum;
 
     @Prop({
         type: Date,
@@ -87,9 +87,9 @@ export const ProjectsSchema = SchemaFactory.createForClass(Project);
 
 ProjectsSchema.index({'$**': 'text'});
 
-export type IProjectModel = Model<ProjectDocument>;
+export type IProjectModel = Model<CompanyDocument>;
 
-export const ProjectModel: IProjectModel = model<ProjectDocument, IProjectModel>(
+export const ProjectModel: IProjectModel = model<CompanyDocument, IProjectModel>(
     ModelEnum.Projects,
     ProjectsSchema,
 );
@@ -99,6 +99,6 @@ ProjectsSchema.post('save', function (doc, next) {
     // throw new Error('something went wrong');
 });
 
-ProjectsSchema.post('remove', async function (doc: ProjectDocument) {
+ProjectsSchema.post('remove', async function (doc: CompanyDocument) {
     // await RoomModel.remove({property: doc._id}).exec();
 });

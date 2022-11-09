@@ -1,4 +1,4 @@
-export enum ProjectTypeEnum {
+export enum CompanyEnum {
     OneGas = 'OneGas',
     Duke = 'Duke'
 }

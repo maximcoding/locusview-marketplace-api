@@ -5,7 +5,6 @@ import {validate} from '../../env.validation';
 import {AppController} from './app.controller';
 import {AppService} from './app.service';
 import {ProjectsModule} from '../projects/projects.module';
-import {ProjectsTypesModule} from '../projectsTypes/projects-types.module';
 import {AuthModule} from '../auth/auth.module';
 import {UserModule} from '../users/user.module';
 import {SmsModule} from '../sms/sms.module';
@@ -15,6 +14,7 @@ import {APP_INTERCEPTOR} from '@nestjs/core';
 import {LoggingInterceptor} from '../../interceptors/logging.interceptor';
 import {SeederModule} from 'nestjs-seeder/dist/seeder/seeder.module';
 import {MongoCacheModule} from '../cache/mongo-cache.module';
+import {CompaniesModule} from "../companies/companies.module";
 
 @Module({
   controllers: [AppController],
@@ -29,7 +29,7 @@ import {MongoCacheModule} from '../cache/mongo-cache.module';
     AuthModule,
     UserModule,
     ProjectsModule,
-    ProjectsTypesModule,
+    CompaniesModule,
     FilesModule,
     SeederModule,
     MongoCacheModule,

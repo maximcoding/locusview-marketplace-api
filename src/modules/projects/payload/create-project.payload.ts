@@ -1,4 +1,4 @@
-import {ProjectTypeEnum} from '../../../enums/projectTypeEnum';
+import {CompanyEnum} from '../../../enums/companyEnum';
 import {
     IsArray,
     IsDateString,
@@ -31,15 +31,15 @@ export const currencyOptions = {
 export class CreateProjectPayload {
     @ApiProperty({
         description: 'project type mandatory',
-        enum: ProjectTypeEnum,
+        enum: CompanyEnum,
         enumName: 'ProjectTypeEnum',
-        default: ProjectTypeEnum.OneGas,
+        default: CompanyEnum.OneGas,
         required: true,
     })
-    @IsEnum(ProjectTypeEnum)
+    @IsEnum(CompanyEnum)
     @IsString()
     @IsNotEmpty()
-    projectType: ProjectTypeEnum;
+    projectType: CompanyEnum;
 
     @ApiProperty({type: [Number]})
     @IsArray()
