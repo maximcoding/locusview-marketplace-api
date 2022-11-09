@@ -65,9 +65,9 @@ export class PatchProjectPayload implements IProject {
     dueDate: Date;
 
     @ApiProperty({
-        description: 'category mandatory',
+        description: 'project type mandatory',
         enum: ProjectTypeEnum,
-        enumName: 'CategoryEnum',
+        enumName: 'ProjectTypeEnum',
         default: ProjectTypeEnum.OneGas,
     })
     @IsOptional()

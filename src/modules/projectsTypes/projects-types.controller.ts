@@ -14,7 +14,6 @@ export class ProjectsTypesController {
 
     @Get()
     async findAll(): Promise<IProjectsTypes[]> {
-        // return categoriesDataArray as ICategory[];
         return await this.service.findAll();
     }
 

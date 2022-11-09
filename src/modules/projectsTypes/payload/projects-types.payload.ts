@@ -22,11 +22,11 @@ export class ProjectsTypesPayload implements IProjectsTypes {
     photoUrl: string;
 }
 
-export class CategoriesPayload {
+export class ProjectsTypesBulkPayload {
     @ApiProperty({
         description: 'array of projectsTypes',
     })
     @IsNotEmpty()
     @IsArray()
-    categories: IProjectsTypes[];
+    projectsTypes: IProjectsTypes[];
 }

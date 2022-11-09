@@ -214,9 +214,9 @@ export class ProjectsService {
         await this.dataModel.deleteOne({_id: found._id});
     }
 
-    private checkProjectTypeExist(categoryName: string) {
-        const category = this.projectTypesMap[categoryName];
-        if (!category) {
+    private checkProjectTypeExist(projectType: string) {
+        const obj = this.projectTypesMap[projectType];
+        if (!obj) {
             throw new NotFoundException('project type does not exist');
         }
     }
