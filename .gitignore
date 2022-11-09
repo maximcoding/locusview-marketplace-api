@@ -133,7 +133,8 @@ dist/
 *.tmlanguage.cache
 *.tmPreferences.cache
 *.stTheme.cache
-
+data
+redis-data
 # workspace files are user-specific
 *.sublime-workspace
 ssl
