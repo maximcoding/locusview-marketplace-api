@@ -44,6 +44,14 @@ export class CreateProjectPayload implements IProject {
     @IsNotEmpty()
     projectType: CompanyEnum;
 
+    @ApiProperty({
+        required: true,
+        type: String
+    })
+    @IsString()
+    @IsNotEmpty()
+    title: string;
+
     @ApiProperty()
     @ApiModelProperty({
         description: 'Dont miss Project Id',
@@ -75,10 +83,7 @@ export class CreateProjectPayload implements IProject {
     @IsDateString()
     dueDate: Date;
 
-    @ApiProperty({description: faker.lorem.words(), default: faker.lorem.words(), required: false, type: String})
-    title: string;
-
-    @ApiProperty({description: faker.lorem.words(), default: faker.lorem.words(), required: false, type: String})
+    @ApiProperty({description: faker.lorem.words(), default: faker.lorem.words(), required: true, type: String})
     @MinLength(2)
     @IsOptional()
     @IsString()

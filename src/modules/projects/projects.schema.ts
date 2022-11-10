@@ -35,9 +35,11 @@ export class Project implements IProject {
 
     @Prop({type: String})
     location: string;
-    @Prop({type: String})
+
+    @Prop({type: String, required: true})
     title: string;
-    @Prop({type: String})
+
+    @Prop({type: String, required: true})
     description: string;
 
     @Prop({type: String})
