@@ -42,7 +42,6 @@ export class ProjectsService {
     }
 
     async findAll(params: QueryProjectsPayload, filter?: any): Promise<IFindAllProjectsResponse> {
-        console.log('filter', filter);
         const query = this.dataModel.find(filter ? filter : {});
         if (params.sort) {
             query.sort(this.sortBy(params.sort));
@@ -114,8 +113,13 @@ export class ProjectsService {
     // PROPERTY_MOCK
     async create(user, data: CreateProjectPayload): Promise<IProject> {
         this.checkProjectTypeExist(data.projectType);
-        const property = new this.dataModel({...data});
-        return property.save();
+        const found = await this.dataModel.findOne({projectId: data.projectId}).exec();
+        if (found) {
+            return await this.dataModel.findByIdAndUpdate(found.id, {...data}).exec();
+        } else {
+            const property = new this.dataModel({...data});
+            return property.save();
+        }
     }
 
     async updateById(id: string, data: PatchProjectPayload): Promise<ProjectDocument> {

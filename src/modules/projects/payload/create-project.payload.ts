@@ -3,7 +3,7 @@ import {
     IsArray,
     IsDateString,
     IsEnum,
-    IsNotEmpty,
+    IsNotEmpty, IsNumber,
     IsOptional,
     IsString,
     MinLength,
@@ -12,6 +12,7 @@ import {ApiProperty} from '@nestjs/swagger';
 import * as faker from 'faker';
 import {IProject} from "../projects.schema";
 import {IAwsFile} from 'src/modules/files/aws-file.schema';
+import {ApiModelProperty} from "@nestjs/swagger/dist/decorators/api-model-property.decorator";
 
 export const currencyOptions = {
     require_symbol: false,
@@ -42,6 +43,17 @@ export class CreateProjectPayload implements IProject {
     @IsString()
     @IsNotEmpty()
     projectType: CompanyEnum;
+
+    @ApiProperty()
+    @ApiModelProperty({
+        description: 'Dont miss Project Id',
+        default: '010101',
+        required: true,
+        type: Number,
+    })
+    @IsNumber()
+    @IsNotEmpty()
+    projectId;
 
     @ApiProperty({description: faker.lorem.words(), default: faker.lorem.words(), required: false, type: String})
     @IsString()

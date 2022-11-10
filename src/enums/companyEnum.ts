@@ -1,4 +1,5 @@
 export enum CompanyEnum {
     OneGas = 'OneGas',
-    Duke = 'Duke'
+    Duke = 'Duke',
+    Atmos = 'Atmos'
 }

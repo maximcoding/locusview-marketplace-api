@@ -43,6 +43,9 @@ export class Project implements IProject {
     @Prop({type: String})
     projectName: string;
 
+    @Prop({type: Number})
+    projectId: number;
+
     @Prop({type: String})
     companyName: string;
 

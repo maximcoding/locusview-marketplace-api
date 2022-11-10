@@ -79,22 +79,21 @@ export class ProjectsController {
         return await this.service.updateById(id, data);
     }
 
-
-    @Post(':id/upload/images')
-    @ApiConsumes('multipart/form-data')
-    @ApiMultiFile()
-    @UseInterceptors(FileFieldsInterceptor([{name: 'files', maxCount: 4}], multerOptions))
-    async uploadImages(
-        @Param('id', ObjectIdValidationPipe) id: string,
-        @UploadedFiles() data: Express.Multer.File[],
-    ): Promise<IProject> {
-        return await this.service.uploadImages(id, data);
-    }
+    //
+    // @Post(':id/upload/images')
+    // @ApiConsumes('multipart/form-data')
+    // @ApiMultiFile()
+    // @UseInterceptors(FileFieldsInterceptor([{name: 'files', maxCount: 4}], multerOptions))
+    // async uploadImages(
+    //     @Param('id', ObjectIdValidationPipe) id: string,
+    //     @UploadedFiles() data: Express.Multer.File[],
+    // ): Promise<IProject> {
+    //     return await this.service.uploadImages(id, data);
+    // }
 
     @Post('create')
     @ApiCreatedResponse({description: 'The project has been successfully created.'})
     async create(@AuthUser() user: UserDocument, @Body() data: CreateProjectPayload): Promise<IProject> {
-        console.log(data);
         return await this.service.create(user, data);
     }
 
