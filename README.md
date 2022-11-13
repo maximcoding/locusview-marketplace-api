@@ -1,5 +1,5 @@
 ## Description
-LocusView For Everyone REST API
+LocusView MarketPlace REST API ( Company Hackathon )
 
 ## Installation
 
